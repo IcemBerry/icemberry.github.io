@@ -1,4 +1,5 @@
----
-title: tags
-date: 2018-06-01 17:20:02
----
+ title: All tags
+ date: 2014-12-22 12:39:04
+ type: "tags"
+ comments: false
+ ---
