@@ -1,6 +1,7 @@
 ---
 title: Pale Blue Dot
 date: 2018-05-01 17:16:40
+comments: false
 ---
 
 {% blockquote 30:15, Isaiah %}
