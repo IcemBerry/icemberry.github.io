@@ -104,7 +104,7 @@ seo: false
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
-index_with_subtitle: true
+index_with_subtitle: false
 
 
 # ---------------------------------------------------------------
@@ -138,9 +138,9 @@ menu_settings:
 
 # Schemes
 #scheme: Muse
-scheme: Mist
+#scheme: Mist
 #scheme: Pisces
-#scheme: Gemini
+scheme: Gemini
 
 
 # ---------------------------------------------------------------

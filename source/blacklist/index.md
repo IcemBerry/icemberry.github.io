@@ -2,6 +2,7 @@
 title: 黑名单
 date: 2018-06-07 16:28:44
 comments: false
+notoc: true
 ---
 
 ### ICEM黑名单
