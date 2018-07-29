@@ -8,7 +8,7 @@ tags:
   - Hexo
   - RSS
 ---
-Hexo文章主体使用Markdown格式，辅之以"Front-matter"做一些基础的博文配置，Markdown格式在这里不会过多提及，对该格式不是很理解的同志可以访问[这里](https://github.com/guodongxiaren/README)查看详细指南。本篇主要讲一些"Front-matter"的含义和基本使用。
+Hexo文章主体使用Markdown格式，辅之以"Front-matter"做一些基础的博文配置，Markdown格式在这里不会过多提及，如果你对该格式不是很理解请访问[这里](https://github.com/guodongxiaren/README)查看详细指南。本篇主要讲一些"Front-matter"的含义和基本使用。
 
 #### Front-matter
 
@@ -55,13 +55,13 @@ Front-matter
 正文
 ````
 
-这两种方法均可正常被Hexo识别并在首页摘要和RSS内应用，单纯的看各位同志的习惯，没有优劣之分。
+这两种方法均可正常被Hexo识别并在首页摘要和RSS内应用，单纯的看各位的习惯，没有优劣之分。
 
 
 
 #### Tag Plugin 
 
-除了上节介绍的`<!-- more --> `内置标签外，Hexo和NexT主题还有很多内置标签，他们提供了各种实用功能，在这里我给出相关的官方文档，有兴趣的同志可进一步了解:
+除了上节介绍的`<!-- more --> `内置标签外，Hexo和NexT主题还有很多内置标签，他们提供了各种实用功能，在这里我给出相关的官方文档，如果有兴趣的话可进一步了解:
 
 - [**Hexo**标签插件（Tag Plugins）](https://hexo.io/zh-cn/docs/tag-plugins.html)
 - [**NexT**内置标签 (Tag Plugin)](https://theme-next.iissnan.com/tag-plugins.html)
