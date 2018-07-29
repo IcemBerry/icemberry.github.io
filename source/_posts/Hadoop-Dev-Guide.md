@@ -12,5 +12,5 @@ Hadoop开发指南目前确定会写7篇，分别是HDFS、MapReduce、HBase、H
 
 随着系列文章的发布，我会在这篇博文里贴出相应的文章链接。
 
-1. [HDFS (Hadoop Distributed File System)](https://icemberry.com/2018/07/HDFS%20(Hadoop%20Distributed%20File%20System)/)
+1. [HDFS (Hadoop Distributed File System)](https://icemberry.com/2018/07/HDFS-hadoop-dev-guide/)
 
