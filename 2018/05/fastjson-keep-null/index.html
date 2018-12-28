@@ -115,7 +115,7 @@
 <meta property="og:description" content="最近开发中遇到调用第三方Web API的功能，后端在处理JSON数据时使用Fastjson来做反序列化，由于调用API返回的数据格式主体部分过于繁杂且没有太多可抽象的特征，所以只对头部(返回JSON最外层请求状态部分)进行了简单的分割，之后把剩下的主题内容进行数据库存储操作，并将结果返回给前端，由前端根据不同页面再做解析。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://p31evsni6.bkt.gdipper.com/201805160.jpg">
-<meta property="og:updated_time" content="2018-12-28T06:47:43.996Z">
+<meta property="og:updated_time" content="2018-12-28T08:08:28.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fastjson反序列化JSON对象时保留null值的key">
 <meta name="twitter:description" content="最近开发中遇到调用第三方Web API的功能，后端在处理JSON数据时使用Fastjson来做反序列化，由于调用API返回的数据格式主体部分过于繁杂且没有太多可抽象的特征，所以只对头部(返回JSON最外层请求状态部分)进行了简单的分割，之后把剩下的主题内容进行数据库存储操作，并将结果返回给前端，由前端根据不同页面再做解析。">
@@ -439,7 +439,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-12-28 14:47:43" itemprop="dateModified" datetime="2018-12-28T14:47:43+08:00">2018-12-28</time>
+                <time title="修改时间：2018-12-28 16:08:28" itemprop="dateModified" datetime="2018-12-28T16:08:28+08:00">2018-12-28</time>
               
             
           </span>
@@ -491,6 +491,26 @@
             </span>
           
 
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">1.1k</span>
+              
+
+              
+
+              
+            </div>
           
 
           
@@ -829,17 +849,26 @@
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-pencil"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Jirair He</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">15k</span>
   
 
   
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
 
 
 
@@ -847,11 +876,12 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.6.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a></div>
 
 
 
 
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -1064,6 +1094,48 @@
   
 
   
+
+  
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
 
 </body>
 </html>
