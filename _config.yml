@@ -80,3 +80,16 @@ deploy:
   type: git
   repo: https://github.com/IcemBerry/icemberry.github.io.git
   branch: master
+
+#RSS
+## Docs: https://github.com/hexojs/hexo-generator-feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
