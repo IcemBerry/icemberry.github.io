@@ -60,13 +60,13 @@ rss:
 footer:
   # Specify the date when the site was setup.
   # If not defined, current year will be used.
-  #since: 2015
+  since: 2018
 
   # Icon between year and copyright info.
   icon:
     # Icon name in fontawesome, see: https://fontawesome.com/v4.7.0/icons
     # `heart` is recommended with animation in red (#ff0000).
-    name: user
+    name: pencil
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.
@@ -79,13 +79,13 @@ footer:
     # Hexo link (Powered by Hexo).
     enable: true
     # Version info of Hexo after Hexo link (vX.X.X).
-    version: true
+    version: false
 
   theme:
     # Theme & scheme info link (Theme - NexT.scheme).
     enable: true
     # Version info of NexT after scheme info (vX.X.X).
-    version: true
+    version: false
   # -------------------------------------------------------------
   # Beian icp information for Chinese users. In China, every legal website should have a beian icp in website footer.
   # http://www.miitbeian.gov.cn
@@ -163,8 +163,6 @@ scheme: Mist
 #scheme: Pisces
 #scheme: Gemini
 
-# Start time
-since: 2018
 
 # ---------------------------------------------------------------
 # Sidebar Settings
@@ -302,9 +300,9 @@ post_meta:
 # Post wordcount display settings
 # Dependencies: https://github.com/theme-next/hexo-symbols-count-time
 symbols_count_time:
-  separated_meta: true
+  separated_meta: false
   item_text_post: true
-  item_text_total: false
+  item_text_total: true
   awl: 4
   wpm: 275
 
@@ -1057,3 +1055,11 @@ vendors:
 css: css
 js: js
 images: images
+
+# window woblle
+wobble:
+  enable: true  # 是否开启边缘波动效果
+  radius: 50  # 波动半径
+  sidebar: true  # 开启侧边栏边缘摆动
+  header: true  # 开启头部边缘摆动
+  footer: true  # 开启脚部边缘摆动

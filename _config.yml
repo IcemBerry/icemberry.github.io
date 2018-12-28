@@ -93,3 +93,9 @@ feed:
   content_limit_delim: ' '
   order_by: -date
   icon: icon.png
+
+symbols_count_time:
+  symbols: true   # 统计单篇文章字数
+  time: false   # 估算单篇文章阅读时间
+  total_symbols: true  # 统计站点总字数
+  total_time: false  # 估算站点总阅读时间
