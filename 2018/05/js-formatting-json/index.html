@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="google-site-verification" content="eoTcviWHB80LZ2-SIz9WFMfuJOW2jCNVz5nS6S0tmjM">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近开发的项目中涉及到调用Web API并在前台解析的功能需求，Web API返回的数据只有极小部分有用，所以在解析后还需进行数据清洗，之后再调用其他组件再处理。遇到的问题不算复杂，但刚接触JS，还是稍微绕了一些弯路才找到解决方法。">
+<meta name="keywords" content="JSON,JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS下多层级JSON数据格式化">
+<meta property="og:url" content="https://icemberry.com/2018/05/js-formatting-json/index.html">
+<meta property="og:site_name" content="Pale Blue Dot">
+<meta property="og:description" content="最近开发的项目中涉及到调用Web API并在前台解析的功能需求，Web API返回的数据只有极小部分有用，所以在解析后还需进行数据清洗，之后再调用其他组件再处理。遇到的问题不算复杂，但刚接触JS，还是稍微绕了一些弯路才找到解决方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-28T02:23:56.018Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS下多层级JSON数据格式化">
+<meta name="twitter:description" content="最近开发的项目中涉及到调用Web API并在前台解析的功能需求，Web API返回的数据只有极小部分有用，所以在解析后还需进行数据清洗，之后再调用其他组件再处理。遇到的问题不算复杂，但刚接触JS，还是稍微绕了一些弯路才找到解决方法。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Pale Blue Dot" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://icemberry.com/2018/05/js-formatting-json/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JS下多层级JSON数据格式化 | Pale Blue Dot</title>
+  
+
+
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112928522-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-112928522-1');
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Pale Blue Dot</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-blacklist">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blacklist" rel="section"><i class="menu-item-icon fa fa-fw fa-shield"></i> <br>黑名单</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://icemberry.com/2018/05/js-formatting-json/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jirair He">
+      <meta itemprop="description" content="But is a Dream Killer">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Pale Blue Dot">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JS下多层级JSON数据格式化
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-16 11:07:10" itemprop="dateCreated datePublished" datetime="2018-05-16T11:07:10+08:00">2018-05-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-12-28 10:23:56" itemprop="dateModified" datetime="2018-12-28T10:23:56+08:00">2018-12-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/js-formatting-json/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/js-formatting-json/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近开发的项目中涉及到调用Web API并在前台解析的功能需求，Web API返回的数据只有极小部分有用，所以在解析后还需进行数据清洗，之后再调用其他组件再处理。遇到的问题不算复杂，但刚接触JS，还是稍微绕了一些弯路才找到解决方法。</p>
+<a id="more"></a>
+<h4 id="开发问题"><a href="#开发问题" class="headerlink" title="开发问题"></a>开发问题</h4><p>Web API返回的数据如下: </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"Node"</span>: &#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"北京XX科技有限公司"</span>,</span><br><span class="line">        <span class="attr">"KeyNo"</span>: <span class="string">"4659626b1e5e43f1bcad8c268753216e"</span>,</span><br><span class="line">        <span class="attr">"Category"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"ShortName"</span>: <span class="string">"北京XX"</span>,</span><br><span class="line">        <span class="attr">"Count"</span>: <span class="number">28</span>,</span><br><span class="line">        <span class="attr">"Level"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"Children"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"name"</span>: <span class="string">"股东"</span>,</span><br><span class="line">                <span class="attr">"KeyNo"</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="attr">"Category"</span>: <span class="number">3</span>,</span><br><span class="line">                <span class="attr">"ShortName"</span>: <span class="string">"股东"</span>,</span><br><span class="line">                <span class="attr">"Count"</span>: <span class="number">5</span>,</span><br><span class="line">                <span class="attr">"Level"</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">"Children"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"name"</span>: <span class="string">"王XX"</span>,</span><br><span class="line">                        <span class="attr">"KeyNo"</span>: <span class="string">"4659626b1e5e43f1bcad8c268753216e_王XX"</span>,</span><br><span class="line">                        <span class="attr">"Category"</span>: <span class="number">3</span>,</span><br><span class="line">                        <span class="attr">"ShortName"</span>: <span class="string">"自然人股东"</span>,</span><br><span class="line">                        <span class="attr">"Count"</span>: <span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"Level"</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">"Children"</span>: <span class="literal">null</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"name"</span>: <span class="string">"张XX"</span>,</span><br><span class="line">                        <span class="attr">"KeyNo"</span>: <span class="string">"4659626b1e5e43f1bcad8c268753216e_张XX"</span>,</span><br><span class="line">                        <span class="attr">"Category"</span>: <span class="number">3</span>,</span><br><span class="line">                        <span class="attr">"ShortName"</span>: <span class="string">"自然人股东"</span>,</span><br><span class="line">                        <span class="attr">"Count"</span>: <span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"Level"</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">"Children"</span>: <span class="literal">null</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"name"</span>: <span class="string">"对外投资"</span>,</span><br><span class="line">                <span class="attr">"KeyNo"</span>: <span class="literal">null</span>,</span><br><span class="line">                <span class="attr">"Category"</span>: <span class="number">2</span>,</span><br><span class="line">                <span class="attr">"ShortName"</span>: <span class="string">"对外投资"</span>,</span><br><span class="line">                <span class="attr">"Count"</span>: <span class="number">23</span>,</span><br><span class="line">                <span class="attr">"Level"</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">"Children"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"name"</span>: <span class="string">"北京XXX科技有限公司"</span>,</span><br><span class="line">                        <span class="attr">"KeyNo"</span>: <span class="string">"afb3daf1797df272997f22b143c964f6"</span>,</span><br><span class="line">                        <span class="attr">"Category"</span>: <span class="number">2</span>,</span><br><span class="line">                        <span class="attr">"ShortName"</span>: <span class="string">"北京XXX"</span>,</span><br><span class="line">                        <span class="attr">"Count"</span>: <span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"Level"</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">"Children"</span>: <span class="literal">null</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"name"</span>: <span class="string">"北京XXX科技有限公司"</span>,</span><br><span class="line">                        <span class="attr">"KeyNo"</span>: <span class="string">"274d9311979595d54821e1d9e8d73e36"</span>,</span><br><span class="line">                        <span class="attr">"Category"</span>: <span class="number">2</span>,</span><br><span class="line">                        <span class="attr">"ShortName"</span>: <span class="string">"北京XXX"</span>,</span><br><span class="line">                        <span class="attr">"Count"</span>: <span class="number">0</span>,</span><br><span class="line">                        <span class="attr">"Level"</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="attr">"Children"</span>: <span class="literal">null</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后期需要调用组件需求的数据结构如下:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"北京XX科技有限公司"</span>,</span><br><span class="line">    <span class="attr">"children"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"股东"</span>,</span><br><span class="line">            <span class="attr">"children"</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"name"</span>: <span class="string">"王XX"</span>,</span><br><span class="line">                    <span class="attr">"value"</span>: <span class="string">"自然人股东"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"name"</span>: <span class="string">"张XX"</span>,</span><br><span class="line">                    <span class="attr">"value"</span>: <span class="string">"自然人股东"</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"对外投资"</span>,</span><br><span class="line">            <span class="attr">"children"</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"name"</span>: <span class="string">"北京XXX"</span>,</span><br><span class="line">                    <span class="attr">"value"</span>: <span class="string">"北京XXX科技有限公司"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">"name"</span>: <span class="string">"北京XXX"</span>,</span><br><span class="line">                    <span class="attr">"value"</span>: <span class="string">"北京XXX科技有限公司"</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上展示的数据仅有两层，但在实际应用中，数据层级可能达到4-6层，由于是初次做前端JSON解析，网络上相关资料也很稀少，所以刚开始写起来还是很费劲的，但经过两小时摸索后，成功写出了解析方法，所以简单记录以下，希望对大家有所帮助。</p>
+<h4 id="解析思路"><a href="#解析思路" class="headerlink" title="解析思路"></a>解析思路</h4><p>首先，JSON的最外层节点可以确定只有两个，即股东与投资人，所以这部分可以直接固定写好，像是这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> json = &#123;&#125;;</span><br><span class="line">    json.name = name;</span><br><span class="line">    json.children = [];<span class="comment">//children作为数组需要提前声明，否则会抛出undefined，下同</span></span><br><span class="line">    json.children[<span class="number">0</span>] = &#123;&#125;;</span><br><span class="line">    json.children[<span class="number">0</span>].name = <span class="string">"股东"</span>;</span><br><span class="line">    json.children[<span class="number">0</span>].children = [];</span><br><span class="line">    json.children[<span class="number">1</span>] = &#123;&#125;;</span><br><span class="line">    json.children[<span class="number">1</span>].name = <span class="string">"对外投资"</span>;</span><br><span class="line">    json.children[<span class="number">1</span>].children = [];</span><br></pre></td></tr></table></figure>
+<p>之后开始遍历第一层子节点:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; gudong.length; i++) &#123;</span><br><span class="line">        <span class="comment">//level1</span></span><br><span class="line">        json.children[<span class="number">0</span>].children[i] = &#123;&#125;;</span><br><span class="line">        json.children[<span class="number">0</span>].children[i].name = gudong[i].name;</span><br><span class="line">        json.children[<span class="number">0</span>].children[i].value = gudong[i].ShortName;</span><br></pre></td></tr></table></figure>
+<p>此时准备便利第二层子节点，但在遍历二层子节点时需要注意判断二层子节点是否存在:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (gudong[i].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">            json.children[<span class="number">0</span>].children[i].children = []; <span class="comment">//注意事先声明children类型，下同</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> ii = <span class="number">0</span>; ii &lt; gudong[i].Children.length; ii++) &#123;</span><br><span class="line">                <span class="comment">//level2</span></span><br><span class="line">                json.children[<span class="number">0</span>].children[i].children[ii] = &#123;&#125;;</span><br><span class="line">                json.children[<span class="number">0</span>].children[i].children[ii].name = gudong[i].Children[ii].name;</span><br><span class="line">                json.children[<span class="number">0</span>].children[i].children[ii].value = gudong[i].Children[ii].ShortName;</span><br></pre></td></tr></table></figure>
+<p>之后用同样的方法便利第3、4层:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (gudong[i].Children[ii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                    json.children[<span class="number">0</span>].children[i].children[ii].children = [];</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">var</span> iii = <span class="number">0</span>; iii &lt; gudong[i].Children[ii].Children.length; iii++) &#123;</span><br><span class="line">                        <span class="comment">//level3</span></span><br><span class="line">                        json.children[<span class="number">0</span>].children[i].children[ii].children[iii] = &#123;&#125;;</span><br><span class="line">                        json.children[<span class="number">0</span>].children[i].children[ii].children[iii].name = gudong[i].Children[ii].Children[iii].name;</span><br><span class="line">                        json.children[<span class="number">0</span>].children[i].children[ii].children[iii].value = gudong[i].Children[ii].Children[iii].ShortName;</span><br><span class="line">                        <span class="keyword">if</span> (gudong[i].Children[ii].Children[iii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                            json.children[<span class="number">0</span>].children[i].children[ii].children[iii].children = [];</span><br><span class="line">                            <span class="keyword">for</span> (<span class="keyword">var</span> iiii = <span class="number">0</span>; iiii &lt; gudong[i].Children[ii].Children[iii].Children.length; iiii++) &#123;</span><br><span class="line">                                <span class="comment">//level4</span></span><br><span class="line">                                json.children[<span class="number">0</span>].children[i].children[ii].children[iii].children[iiii] = &#123;&#125;;</span><br><span class="line">                                json.children[<span class="number">0</span>].children[i].children[ii].children[iii].children[iiii].name = gudong[i].Children[ii].Children[iii].Children[iiii].name;</span><br><span class="line">                                json.children[<span class="number">0</span>].children[i].children[ii].children[iii].children[iiii].value = gudong[i].Children[ii].Children[iii].Children[iiii].ShortName;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
+<p>JS做JSON解析与数据清洗很繁复，尤其涉及到这种多层复杂数据时更为明显，但只要足够谨慎和耐心，还是可以很顺利写出令人满意的方法的，以上就是我的解决方法，其实在第一层没有必要固定写，在实际使用中已经做出了修正，在这里就不再贴出。</p>
+<h4 id="完整解决方法"><a href="#完整解决方法" class="headerlink" title="完整解决方法"></a>完整解决方法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatJSON</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    data = data.Node;</span><br><span class="line">    <span class="comment">////level0</span></span><br><span class="line">    <span class="keyword">var</span> json = &#123;&#125;;</span><br><span class="line">    json.name = data.name;</span><br><span class="line">    json.value = data.ShortName;</span><br><span class="line">    <span class="keyword">if</span> (data.Children != <span class="literal">null</span>) &#123;</span><br><span class="line">        json.children = [];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; data.Children.length; i++) &#123;</span><br><span class="line">            <span class="comment">//level1</span></span><br><span class="line">            json.children[i] = &#123;&#125;;</span><br><span class="line">            json.children[i].name = data.Children[i].name;</span><br><span class="line">            json.children[i].value = data.Children[i].ShortName;</span><br><span class="line">            <span class="keyword">if</span> (data.Children[i].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                json.children[i].children = [];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> ii = <span class="number">0</span>; ii &lt; data.Children[i].Children.length; ii++) &#123;</span><br><span class="line">                    <span class="comment">//level2</span></span><br><span class="line">                    json.children[i].children[ii] = &#123;&#125;;</span><br><span class="line">                    json.children[i].children[ii].name = data.Children[i].Children[ii].name;</span><br><span class="line">                    json.children[i].children[ii].value = data.Children[i].Children[ii].ShortName;</span><br><span class="line">                    <span class="keyword">if</span> (data.Children[i].Children[ii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                        json.children[i].children[ii].children = [];</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">var</span> iii = <span class="number">0</span>; iii &lt; data.Children[i].Children[ii].Children.length; iii++) &#123;</span><br><span class="line">                            <span class="comment">//level3</span></span><br><span class="line">                            json.children[i].children[ii].children[iii] = &#123;&#125;;</span><br><span class="line">                            json.children[i].children[ii].children[iii].name = data.Children[i].Children[ii].Children[iii].name;</span><br><span class="line">                            json.children[i].children[ii].children[iii].value = data.Children[i].Children[ii].Children[iii].ShortName;</span><br><span class="line">                            <span class="keyword">if</span> (data.Children[i].Children[ii].Children[iii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                                json.children[i].children[ii].children[iii].children = [];</span><br><span class="line">                                <span class="keyword">for</span> (<span class="keyword">var</span> iiii = <span class="number">0</span>; iiii &lt; data.Children[i].Children[ii].Children[iii].Children.length; iiii++) &#123;</span><br><span class="line">                                    <span class="comment">//level4</span></span><br><span class="line">                                    json.children[i].children[ii].children[iii].children[iiii] = &#123;&#125;;</span><br><span class="line">                                    json.children[i].children[ii].children[iii].children[iiii].name = data.Children[i].Children[ii].Children[iii].Children[iiii].name;</span><br><span class="line">                                    json.children[i].children[ii].children[iii].children[iiii].value = data.Children[i].Children[ii].Children[iii].Children[iiii].ShortName;</span><br><span class="line">                                    <span class="keyword">if</span> (data.Children[i].Children[ii].Children[iii].Children[iiii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                                        json.children[i].children[ii].children[iii].children[iiii].children = [];</span><br><span class="line">                                        <span class="keyword">for</span> (<span class="keyword">var</span> iiiii = <span class="number">0</span>; iiiii &lt; data.Children[i].Children[ii].Children[iii].Children[iiii].Children.length; iiiii++) &#123;</span><br><span class="line">                                            <span class="comment">//level5</span></span><br><span class="line">                                            json.children[i].children[ii].children[iii].children[iiii].children[iiiii] = &#123;&#125;;</span><br><span class="line">                                            json.children[i].children[ii].children[iii].children[iiii].children[iiiii].name = data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].name;</span><br><span class="line">                                            json.children[i].children[ii].children[iii].children[iiii].children[iiiii].value = data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].ShortName;</span><br><span class="line">                                            <span class="keyword">if</span> (data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].Children != <span class="literal">null</span>) &#123;</span><br><span class="line">                                                json.children[i].children[ii].children[iii].children[iiii].children[iiiii].children = [];</span><br><span class="line">                                                <span class="keyword">for</span> (<span class="keyword">var</span> iiiiii = <span class="number">0</span>; iiiiii &lt; data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].Children.length; iiiiii++) &#123;</span><br><span class="line">                                                    <span class="comment">//level6</span></span><br><span class="line">                                                    json.children[i].children[ii].children[iii].children[iiii].children[iiiii].children[iiiiii] = &#123;&#125;;</span><br><span class="line">                                                    json.children[i].children[ii].children[iii].children[iiii].children[iiiii].children[iiiiii].name = data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].Children[iiiiii].name;</span><br><span class="line">                                                    json.children[i].children[ii].children[iii].children[iiii].children[iiiii].children[iiiiii].value = data.Children[i].Children[ii].Children[iii].Children[iiii].Children[iiiii].Children[iiiiii].ShortName;</span><br><span class="line">                                                &#125;</span><br><span class="line">                                            &#125;</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    &#125;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"format: "</span> + <span class="built_in">JSON</span>.stringify(json));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jirair He</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://icemberry.com/2018/05/js-formatting-json/" title="JS下多层级JSON数据格式化">https://icemberry.com/2018/05/js-formatting-json/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JSON/" rel="tag"># JSON</a>
+          
+            <a href="/tags/JS/" rel="tag"># JS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/fastjson-keep-null/" rel="prev" title="Fastjson反序列化JSON对象时保留null值的key">
+                Fastjson反序列化JSON对象时保留null值的key <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Jirair He">
+            
+              <p class="site-author-name" itemprop="name">Jirair He</p>
+              <p class="site-description motion-element" itemprop="description">But is a Dream Killer</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/icemberry" title="GitHub &rarr; https://github.com/icemberry" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Icemberry" title="Twitter &rarr; https://twitter.com/Icemberry" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发问题"><span class="nav-number">1.</span> <span class="nav-text">开发问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析思路"><span class="nav-number">2.</span> <span class="nav-text">解析思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完整解决方法"><span class="nav-number">3.</span> <span class="nav-text">完整解决方法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jirair He</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.6.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-globe"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-bookmark"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+  
+    <script id="dsq-count-scr" src="https://icemberry.disqus.com/count.js" async></script>
+  
+
+  
+    <script>
+      var disqus_config = function () {
+        this.page.url = "https://icemberry.com/2018/05/js-formatting-json/";
+        this.page.identifier = "2018/05/js-formatting-json/";
+        this.page.title = 'JS下多层级JSON数据格式化';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://icemberry.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        $(function () {
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          if (offsetTop <= 0) {
+            // load directly when there's no a scrollbar
+            loadComments();
+          } else {
+            $(window).on('scroll.disqus_scroll', function () {
+              // offsetTop may changes because of manually resizing browser window or lazy loading images.
+              var offsetTop = $('#comments').offset().top - $(window).height();
+              var scrollTop = $(window).scrollTop();
+
+              // pre-load comments a bit? (margin or anything else)
+              if (offsetTop - scrollTop < 60) {
+                $(window).off('.disqus_scroll');
+                loadComments();
+              }
+            });
+          }
+        });
+      
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
