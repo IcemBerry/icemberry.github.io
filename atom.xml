@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://icemberry.com/"/>
-  <updated>2018-12-28T08:14:46.537Z</updated>
+  <updated>2018-12-31T15:41:10.904Z</updated>
   <id>https://icemberry.com/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>HDFS (Hadoop Distributed File System)</title>
     <link href="https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/"/>
     <id>https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/</id>
-    <published>2018-12-28T08:14:46.537Z</published>
-    <updated>2018-12-28T08:14:46.537Z</updated>
+    <published>2018-12-31T15:41:10.904Z</published>
+    <updated>2018-12-31T15:41:10.904Z</updated>
     
     <summary type="html">
     
@@ -42,8 +42,8 @@
     <title>Hadoop 开发指南</title>
     <link href="https://icemberry.com/2018/12/Hadoop-Dev-Guide/"/>
     <id>https://icemberry.com/2018/12/Hadoop-Dev-Guide/</id>
-    <published>2018-12-28T08:14:46.537Z</published>
-    <updated>2018-12-28T08:14:46.537Z</updated>
+    <published>2018-12-31T15:41:10.904Z</published>
+    <updated>2018-12-31T15:41:10.904Z</updated>
     
     <summary type="html">
     
@@ -67,11 +67,33 @@
   </entry>
   
   <entry>
+    <title>2018年终回顾</title>
+    <link href="https://icemberry.com/2018/12/2018Review/"/>
+    <id>https://icemberry.com/2018/12/2018Review/</id>
+    <published>2018-12-31T15:41:10.904Z</published>
+    <updated>2018-12-31T15:41:10.904Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在是2018年12月26日，距离2019尚有不到一周时间，简单回顾一下我2018年的各种事件，依此好好调整2019年的计划。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Life" scheme="https://icemberry.com/categories/Life/"/>
+    
+    
+      <category term="2018" scheme="https://icemberry.com/tags/2018/"/>
+    
+      <category term="review" scheme="https://icemberry.com/tags/review/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo写作指南</title>
     <link href="https://icemberry.com/2018/06/write-guide/"/>
     <id>https://icemberry.com/2018/06/write-guide/</id>
     <published>2018-06-06T09:32:11.000Z</published>
-    <updated>2018-12-28T08:14:46.537Z</updated>
+    <updated>2018-12-31T15:41:10.904Z</updated>
     
     <summary type="html">
     
@@ -93,7 +115,7 @@
     <link href="https://icemberry.com/2018/05/fastjson-keep-null/"/>
     <id>https://icemberry.com/2018/05/fastjson-keep-null/</id>
     <published>2018-05-16T03:44:10.000Z</published>
-    <updated>2018-12-28T08:14:46.537Z</updated>
+    <updated>2018-12-31T15:41:10.904Z</updated>
     
     <summary type="html">
     
@@ -117,7 +139,7 @@
     <link href="https://icemberry.com/2018/05/js-formatting-json/"/>
     <id>https://icemberry.com/2018/05/js-formatting-json/</id>
     <published>2018-05-16T03:07:10.000Z</published>
-    <updated>2018-12-28T08:14:46.537Z</updated>
+    <updated>2018-12-31T15:41:10.904Z</updated>
     
     <summary type="html">
     
