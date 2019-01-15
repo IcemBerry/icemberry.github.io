@@ -21,3 +21,9 @@ in silence and in hope shall your strength be.
 
 ![Pale_Blue_Dot](https://upload.wikimedia.org/wikipedia/commons/7/71/PaleBlueDot.jpg "Pale_Blue_Dot")
 > By Voyager 1 [Public domain], via Wikimedia Commons
+
+#### 声明
+
+{% note danger %}
+本人并非Google的雇员；本人与Google或任何Google实体没有合作、代理或雇佣关系；本人所供职公司与Google没有任何直接、间接、连带之利益关系；本人博客内所表达的观点，仅代表个人观点，与本人所供职公司、服务之组织或Google无关。
+{% endnote %}
