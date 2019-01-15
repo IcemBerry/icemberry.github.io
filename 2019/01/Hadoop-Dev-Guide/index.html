@@ -106,18 +106,18 @@
 
 
 
-  <meta name="description" content="HDFS是Hadoop开发的前提，如果没有HDFS，一切大数据开发的设想都不可能实现。">
+  <meta name="description" content="刚进入暑期，被告知要紧急组建一个大数据研发团队，这三个月以来，匆匆忙忙把之前丢下的大数据开发重新捡了起来，到了这周，第一阶段已经基本完成，也终于有时间慢下来梳理一下Hadoop开发中遇到的实际问题和一些心得，这些完全是自己摸索，苦于无人交流，在某些技术选型上会有一些先入为主的偏见，或是对基础概念的理解偏差，若有缘看到，还望不吝赐教。 Hadoop开发指南目前确定会写7篇，分别是HDFS、MapRe">
 <meta name="keywords" content="Hadoop,HDFS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HDFS (Hadoop Distributed File System)">
-<meta property="og:url" content="https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/index.html">
+<meta property="og:title" content="Hadoop 开发指南">
+<meta property="og:url" content="https://icemberry.com/2019/01/Hadoop-Dev-Guide/index.html">
 <meta property="og:site_name" content="Pale Blue Dot">
-<meta property="og:description" content="HDFS是Hadoop开发的前提，如果没有HDFS，一切大数据开发的设想都不可能实现。">
+<meta property="og:description" content="刚进入暑期，被告知要紧急组建一个大数据研发团队，这三个月以来，匆匆忙忙把之前丢下的大数据开发重新捡了起来，到了这周，第一阶段已经基本完成，也终于有时间慢下来梳理一下Hadoop开发中遇到的实际问题和一些心得，这些完全是自己摸索，苦于无人交流，在某些技术选型上会有一些先入为主的偏见，或是对基础概念的理解偏差，若有缘看到，还望不吝赐教。 Hadoop开发指南目前确定会写7篇，分别是HDFS、MapRe">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-31T15:41:10.904Z">
+<meta property="og:updated_time" content="2019-01-15T08:56:14.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDFS (Hadoop Distributed File System)">
-<meta name="twitter:description" content="HDFS是Hadoop开发的前提，如果没有HDFS，一切大数据开发的设想都不可能实现。">
+<meta name="twitter:title" content="Hadoop 开发指南">
+<meta name="twitter:description" content="刚进入暑期，被告知要紧急组建一个大数据研发团队，这三个月以来，匆匆忙忙把之前丢下的大数据开发重新捡了起来，到了这周，第一阶段已经基本完成，也终于有时间慢下来梳理一下Hadoop开发中遇到的实际问题和一些心得，这些完全是自己摸索，苦于无人交流，在某些技术选型上会有一些先入为主的偏见，或是对基础概念的理解偏差，若有缘看到，还望不吝赐教。 Hadoop开发指南目前确定会写7篇，分别是HDFS、MapRe">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/">
+  <link rel="canonical" href="https://icemberry.com/2019/01/Hadoop-Dev-Guide/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>HDFS (Hadoop Distributed File System) | Pale Blue Dot</title>
+  <title>Hadoop 开发指南 | Pale Blue Dot</title>
   
 
 
@@ -377,7 +377,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/">
+    <link itemprop="mainEntityOfPage" href="https://icemberry.com/2019/01/Hadoop-Dev-Guide/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jirair He">
@@ -394,7 +394,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HDFS (Hadoop Distributed File System)
+          <h1 class="post-title" itemprop="name headline">Hadoop 开发指南
 
               
             
@@ -420,7 +420,7 @@
                 
               
 
-              <time title="创建时间：2018-12-31 23:41:10" itemprop="dateCreated datePublished" datetime="2018-12-31T23:41:10+08:00">2018-12-31</time>
+              <time title="创建时间：2019-01-15 16:56:14" itemprop="dateCreated datePublished" datetime="2019-01-15T16:56:14+08:00">2019-01-15</time>
             
 
             
@@ -453,9 +453,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/HDFS-hadoop-dev-guide/#comments" itemprop="discussionUrl">
+                <a href="/2019/01/Hadoop-Dev-Guide/#comments" itemprop="discussionUrl">
                 
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/HDFS-hadoop-dev-guide/" itemprop="commentCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/Hadoop-Dev-Guide/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -486,7 +486,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">1.3k</span>
+                <span title="本文字数">447</span>
               
 
               
@@ -510,23 +510,12 @@
       
 
       
-        <p>HDFS是Hadoop开发的前提，如果没有HDFS，一切大数据开发的设想都不可能实现。</p>
-<a id="more"></a>
-<h4 id="HDFS-概述"><a href="#HDFS-概述" class="headerlink" title="HDFS 概述"></a>HDFS 概述</h4><p>回忆一下在HDFS出现之前我们如何处理海量数据？I/O读取文件，不论是逐行还是完全加载到内存，其处理效率与安全性都令人失望。当然，在绝大多数应用内，”海量”数据的数据量不会大到处理困难的地步，而且往往我们对于分析速度并非有过于苛刻的敏感，所以通常这似乎不是很大的问题，但如果每天甚至是每小时产生的数据量达到GB级别且对效率要求苛刻(分钟级别)，我们又该怎么做呢？多线程？磁盘阵列？这些看起来是不错的解决方案，但这样对数据安全来说风险过大，若要保证数据安全，又需要在前期耗费大量的精力进行设计。</p>
-<p>但HDFS的出现使这些原始数据有了可靠的安身之所，也使得接下来的数据操作成为了可能，在实际使用中，每个文件只有一个绝对路径，我们只需要向HDFS内的namenode发出路径请求，就可以明确的访问需要访问的文件，而不需要关心其背后的磁盘阵列与线程分发，HDFS内建的多节点数据拷贝可以保证数据的存储安全与访问性能，除非所有namenode(最近新的版本已支持多个namenode)全部物理损坏，即便如此还有secondary namenode以尽量减少数据丢失。</p>
-<h4 id="HDFS-Commands"><a href="#HDFS-Commands" class="headerlink" title="HDFS Commands"></a>HDFS Commands</h4><p>完整的HDFS指令请参考官方文档:</p>
-<ul>
-<li><a href="https://hadoop.apache.org/docs/r2.7.5/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html#dfs" target="_blank" rel="noopener">HDFS Commands Guide (2.7.5)</a></li>
-</ul>
-<p>在HDFS指令中，最常用的是其<code>dfs</code>指令，其基本格式如下:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs dfs [COMMAND [COMMAND_OPTIONS]]</span><br></pre></td></tr></table></figure>
-<p>完整的<code>COMMAND_OPTIONS</code>可以在这里找到:</p>
-<ul>
-<li><a href="https://hadoop.apache.org/docs/r2.7.5/hadoop-project-dist/hadoop-common/FileSystemShell.html" target="_blank" rel="noopener">File System Shell Guide (2.7.5)</a></li>
-</ul>
-<p>常用的DFS指令如下:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>新建目录</span><br><span class="line">hdfs dfs -makir /user/root/input</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>列出目录内结构</span><br><span class="line">hdfs dfs -ls /user/root/input</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>查看文件内容(短文本)</span><br><span class="line">hdfs dfs -cat /user/root/output/result-part-00000</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>删除文件</span><br><span class="line">hdfs dfs -rm /user/root/input/source.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>删除目录</span><br><span class="line">hdfs dfs -rm -r /user/root/output</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>向HDFS系统内存储文件</span><br><span class="line">hdfs dfs -put ~/source/2018-07-11.log hdfs://cdh0/user/root/input</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>从HDFS拉取文件到本地</span><br><span class="line">hdfs dfs -get hdfs://cdh0/user/root/input/2018-07-11.log ~/source/</span><br></pre></td></tr></table></figure>
-<div class="note info"><p>在实际使用中，我较多的使用<code>hadoop fs</code>而非<code>hdfs dfs</code>，他们在大多数场景下基本是相同的，但总体来讲，<code>hadoop fs</code>所覆盖的范围更广，如果想了解更多关于这两个指令之间的区别，请访问 <a href="https://stackoverflow.com/questions/18142960/whats-the-difference-between-hadoop-fs-shell-commands-and-hdfs-dfs-shell-co" target="_blank" rel="noopener">what’s the difference between “hadoop fs” shell commands and “hdfs dfs” shell commands?</a> 寻求参考或参与讨论</p></div>
+        <p>刚进入暑期，被告知要紧急组建一个大数据研发团队，这三个月以来，匆匆忙忙把之前丢下的大数据开发重新捡了起来，到了这周，第一阶段已经基本完成，也终于有时间慢下来梳理一下Hadoop开发中遇到的实际问题和一些心得，这些完全是自己摸索，苦于无人交流，在某些技术选型上会有一些先入为主的偏见，或是对基础概念的理解偏差，若有缘看到，还望不吝赐教。</p>
+<p>Hadoop开发指南目前确定会写7篇，分别是HDFS、MapReduce、HBase、Hive、Oozie、Sqoop、Hue，这些是我目前主要负责的领域，后期看项目进展可能会追加Flume、Kafka、Spark，相对于理论知识，这个系列会更偏向于实战，我也会在一开始就虚构一个应用场景，并随着项目的进展，在这个案例中使用上述工具，在系列结束后，会有一个完整的流程与相应的代码，这样对我来说更有趣一些，也希望你喜欢。</p>
+<p>随着系列文章的发布，我会在这篇博文里贴出相应的文章链接。</p>
+<ol>
+<li><a href="https://icemberry.com/2018/07/HDFS-hadoop-dev-guide/">HDFS (Hadoop Distributed File System)</a></li>
+</ol>
 
       
     </div>
@@ -560,7 +549,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/" title="HDFS (Hadoop Distributed File System)">https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/</a>
+    <a href="https://icemberry.com/2019/01/Hadoop-Dev-Guide/" title="Hadoop 开发指南">https://icemberry.com/2019/01/Hadoop-Dev-Guide/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -588,8 +577,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/Hadoop-Dev-Guide/" rel="next" title="Hadoop 开发指南">
-                <i class="fa fa-chevron-left"></i> Hadoop 开发指南
+              <a href="/2019/01/2018Review/" rel="next" title="2018年终回顾">
+                <i class="fa fa-chevron-left"></i> 2018年终回顾
               </a>
             
           </div>
@@ -597,6 +586,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/HDFS-hadoop-dev-guide/" rel="prev" title="HDFS (Hadoop Distributed File System)">
+                HDFS (Hadoop Distributed File System) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -648,17 +641,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -795,23 +779,6 @@
       </div>
 
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#HDFS-概述"><span class="nav-number">1.</span> <span class="nav-text">HDFS 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HDFS-Commands"><span class="nav-number">2.</span> <span class="nav-text">HDFS Commands</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
       
 
@@ -825,7 +792,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-pencil"></i>
   </span>
@@ -988,9 +955,9 @@
   
     <script>
       var disqus_config = function () {
-        this.page.url = "https://icemberry.com/2018/12/HDFS-hadoop-dev-guide/";
-        this.page.identifier = "2018/12/HDFS-hadoop-dev-guide/";
-        this.page.title = 'HDFS (Hadoop Distributed File System)';
+        this.page.url = "https://icemberry.com/2019/01/Hadoop-Dev-Guide/";
+        this.page.identifier = "2019/01/Hadoop-Dev-Guide/";
+        this.page.title = 'Hadoop 开发指南';
         };
       function loadComments () {
         var d = document, s = d.createElement('script');
