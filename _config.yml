@@ -1,11 +1,10 @@
-title: Hexo
+title: Pale Blue Dot
 subtitle: ''
 description: ''
-keywords: null
-author: John Doe
-language: en
+author: 千野萍
+language: zh-CN
 timezone: ''
-url: http://example.com
+url: https://icemberry.com
 permalink: ':year/:month/:day/:title/'
 permalink_defaults: null
 pretty_urls:
@@ -60,4 +59,5 @@ exclude: null
 ignore: null
 theme: icarus
 deploy:
-  type: ''
+  type: 'git'
+  repo: https://github.com/IcemBerry/icemberry.github.io.git
