@@ -101,8 +101,6 @@ navbar:
         主页: /
         关于: /about
         时间线: /archives
-        分类: /categories
-        标签: /tags
     # Links to be shown on the right of the navigation bar
     links:
         Google:
