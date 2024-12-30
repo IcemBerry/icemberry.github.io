@@ -318,3 +318,8 @@ providers:
     fontcdn: google
     # Name or URL of the fontawesome icon font CDN provider
     iconcdn: fontawesome
+comment:
+    type: utterances
+    repo: IcemBerry icemberry.github.io
+    issue_term: pathname        # 必填项，与issue_number二选一填写
+    theme: github-light         # 可选填
